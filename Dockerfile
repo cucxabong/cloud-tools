@@ -45,5 +45,6 @@ RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cl
     rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz
 
 # nodejs & npm
-RUN apk add --update --no-cache npm
+RUN apk add --update --no-cache npm && \
+	npm install --global lerna yarn
 
