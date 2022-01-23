@@ -43,3 +43,7 @@ RUN curl -LO https://github.com/moby/buildkit/releases/download/v${BUILDKIT_VERS
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
     tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
     rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz
+
+# nodejs & npm
+RUN apk add --update --no-cache npm
+
