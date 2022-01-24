@@ -9,13 +9,17 @@ on:
     tags:
       - 'v*.*.*'
 
-env:
-  IMAGE_NAME: cloud-tools
-
 jobs:
   build-push:
     name: Build & Push image
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: Dockerfile
+            image_name: cloud-tools
+          - dockerfile: Dockerfile.node
+            image_name: node
 
     steps:
       - name: Checkout
@@ -31,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image_name }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -45,8 +49,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image_name }}:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image_name }}:buildcache,mode=max
