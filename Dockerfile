@@ -14,7 +14,7 @@ RUN apk add --update --no-cache curl \
         ca-certificates
 
 ARG BUILDKIT_VERSION=0.9.3
-ARG HELM_VERSION=3.7.2
+ARG HELM_VERSION=3.8.0
 ARG KUBECTL_VERSION=1.21.6
 ARG CLOUD_SDK_VERSION=367.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
@@ -47,4 +47,3 @@ RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cl
 # nodejs & npm
 RUN apk add --update --no-cache npm && \
 	npm install --global lerna yarn
-
