@@ -11,7 +11,8 @@ RUN apk add --update --no-cache curl \
         libc6-compat \
         openssh-client \
         gnupg \
-        ca-certificates
+        ca-certificates \
+        bind-tools
 
 ARG BUILDKIT_VERSION=0.9.3
 ARG HELM_VERSION=3.8.0
